@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>vn.iot.client</groupId>
+  <artifactId>iot-mqtt-client</artifactId>
+  <version>1.0.0</version>
+  <name>IoT MQTT Client (Cmd &amp; Swing Form)</name>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Mac dinh chay ban dong lenh (Cmd); dung -Pform hoac -Dexec.mainClass=... de chay ban Form -->
+    <exec.mainClass>vn.iot.client.CmdMain</exec.mainClass>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <!-- Cach chay ban Cmd: mvn compile exec:java -Pcmd -->
+    <profile>
+      <id>cmd</id>
+      <properties>
+        <exec.mainClass>vn.iot.client.CmdMain</exec.mainClass>
+      </properties>
+    </profile>
+    <!-- Cach chay ban Form Swing: mvn compile exec:java -Pform -->
+    <profile>
+      <id>form</id>
+      <properties>
+        <exec.mainClass>vn.iot.client.FormMain</exec.mainClass>
+      </properties>
+    </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+          <mainClass>${exec.mainClass}</mainClass>
+          <cleanupDaemonThreads>false</cleanupDaemonThreads>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
